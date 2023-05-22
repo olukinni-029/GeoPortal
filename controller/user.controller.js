@@ -22,6 +22,7 @@ exports.userSignUp = async(req,res)=>{
             password: hashedPassword,
             email,
           });
+          res.redirect('/login');
           res.status(200).json({ Message: "User successfully created", newUser });
           return;
     } catch (error) {
