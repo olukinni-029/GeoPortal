@@ -22,6 +22,7 @@ app.use(session({
     saveUninitialized: true,
     // 
   }));
+  app.use("/api",userRoute);
 
 app.get('/',(req,res)=>{
     res.render('HomePage');
@@ -38,7 +39,6 @@ app.get('/geoportal',isAuth,(req,res)=>{
     res.render('geoportal');
 })    
 
-app.use("/api",userRoute);
 const port = process.env.PORT || 3456;
 connectDB();
 

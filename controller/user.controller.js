@@ -1,12 +1,11 @@
 const User = require("../model/user.model");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 
 exports.userSignUp = async(req,res)=>{
     try {
-        const {name,email,password}= req.body;
-        if (!(name || password || email)) {
+        const {firstName,surname,email,occupation,country,city,password}= req.body;
+        if (!(firstName || password || email||surname||occupation||country||city)) {
             res.status(400).json("All field required");
             return;
           }
@@ -18,12 +17,16 @@ exports.userSignUp = async(req,res)=>{
           const salt = await bcrypt.genSalt(10);
           const hashedPassword = await bcrypt.hash(password, salt);
           const newUser = await User.create({
-            name,
-            password: hashedPassword,
+            firstName,
+            surname,
             email,
+            occupation,
+            country,
+            city,
+            password: hashedPassword,
           });
+          // res.status(200).json({ Message: "User successfully created", newUser });
           res.redirect('/login');
-          res.status(200).json({ Message: "User successfully created", newUser });
           return;
     } catch (error) {
         console.log(error.message);
